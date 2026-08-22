@@ -1,0 +1,9 @@
+﻿__pycache__/
+*.py[cod]
+.venv/
+.env
+data/*
+!data/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+.ipynb_checkpoints/
