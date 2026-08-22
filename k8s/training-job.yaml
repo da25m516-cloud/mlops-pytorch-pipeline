@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cifar10-training
+  namespace: ml-training
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: cifar10-training
+    spec:
+      restartPolicy: Never
+
+      initContainers:
+        - name: initialize-storage
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - mkdir -p /mnt/data /mnt/checkpoints
+          volumeMounts:
+            - name: training-storage
+              mountPath: /mnt
+
+      containers:
+        - name: trainer
+          image: mlops-pytorch-train:latest
+          imagePullPolicy: Never
+          env:
+            - name: TRAINING_CONFIG
+              value: /app/configs/training_config.yaml
+            - name: OMP_NUM_THREADS
+              value: "20"
+            - name: MKL_NUM_THREADS
+              value: "20"
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+            limits:
+              memory: "8Gi"
+          volumeMounts:
+            - name: training-config
+              mountPath: /app/configs
+            - name: training-storage
+              mountPath: /app/data
+              subPath: data
+            - name: training-storage
+              mountPath: /app/checkpoints
+              subPath: checkpoints
+
+      volumes:
+        - name: training-config
+          configMap:
+            name: training-config
+        - name: training-storage
+          persistentVolumeClaim:
+            claimName: training-storage
+
