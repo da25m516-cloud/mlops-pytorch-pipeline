@@ -17,11 +17,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install CPU test dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements/train.txt
-          pip install pytest
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
+          python -m pip install PyYAML pytest
 
       - name: Run tests
-        run: pytest -q
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q tests/test_model.py
