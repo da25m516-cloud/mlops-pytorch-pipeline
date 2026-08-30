@@ -20,3 +20,8 @@ flowchart TD
     N --> O[Health and Prediction Requests]
     M --> P[HPA: 2 to 4 replicas]
 
+
+Service: port 80 → container port 8080
+Probes: /health
+PVC mounts: /app/data and /app/checkpoints
+HPA: 2–4 replicas, CPU target 60%
