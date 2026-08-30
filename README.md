@@ -168,8 +168,8 @@ Example training events:
 
 ```json
 {"event": "training_started", "device": "cuda", "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU"}
-{"event": "epoch_completed", "epoch": 10, "train_accuracy": 0.7807, "val_accuracy": 0.782}
-{"event": "training_completed", "best_val_loss": 0.6344}
+{"event": "epoch_completed", "epoch": 10, "train_accuracy": 0.7786, "val_accuracy": 0.772}
+{"event": "training_completed", "best_val_loss": 0.6594}
 ```
 
 The best model checkpoint is saved to:
@@ -486,9 +486,9 @@ kubectl logs -n ml-training -l app=cifar10-serving --tail=50
 * Dataset: CIFAR-10
 * Epochs: 10
 * Device: NVIDIA GeForce RTX 5070 Laptop GPU
-* Final training accuracy: 78.07 percent in the Docker run
-* Final validation accuracy: 78.20 percent in the Docker run
-* Best validation loss: 0.6344
+* Final training accuracy: 77.86 percent in the Docker run
+* Final validation accuracy: 77.20 percent in the Docker run
+* Best validation loss: 0.6594
 * Checkpoint: `checkpoints/classifier_v1.pt`
 
 ### Kubernetes Serving
